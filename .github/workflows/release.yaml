@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release:
     name: Release
@@ -16,13 +20,6 @@ jobs:
         uses: google-github-actions/release-please-action@v4
         with:
           release-type: go
-          package-name: relayer_exporter
-          changelog-types: >-
-            [
-              {"type":"feat","section":"Features","hidden":false},
-              {"type":"fix","section":"Bug Fixes","hidden":false},
-              {"type":"chore","section":"Miscellaneous","hidden":true}
-            ]
 
       - name: Checkout
         uses: actions/checkout@v4
