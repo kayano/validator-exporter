@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/kayano/validator-exporter/compare/v1.0.0...v1.0.1) (2023-12-19)
+
+
+### Bug Fixes
+
+* Remove perms ([#4](https://github.com/kayano/validator-exporter/issues/4)) ([2cd4813](https://github.com/kayano/validator-exporter/commit/2cd4813780998f40b1f2a61b3ddee79b2705d495))
+
 ## 1.0.0 (2023-12-19)
 
 
