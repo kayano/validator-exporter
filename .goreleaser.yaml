@@ -1,0 +1,57 @@
+---
+project_name: validator-exporter
+before:
+  hooks:
+    - go mod tidy
+env:
+  - CGO_ENABLED=0
+builds:
+  - main: "./cmd/{{ .ProjectName }}/main.go"
+    binary: "{{ .ProjectName }}"
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -mod=readonly
+      - -trimpath
+    ldflags:
+      - -s -w
+    tags:
+      - netgo
+
+universal_binaries:
+  - replace: false
+
+dockers:
+  - use: buildx
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - "ghcr.io/kayano/{{ .ProjectName }}:{{ .Version }}-amd64"
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+  - use: buildx
+    goos: linux
+    goarch: arm64
+    image_templates:
+      - "ghcr.io/kayano/{{ .ProjectName }}:{{ .Version }}-arm64v8"
+    build_flag_templates:
+      - "--pull"
+      - "--platform=linux/arm64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+docker_manifests:
+  - name_template: ghcr.io/kayano/{{ .ProjectName }}:{{ .Version }}
+    image_templates:
+      - ghcr.io/kayano/{{ .ProjectName }}:{{ .Version }}-amd64
+      - ghcr.io/kayano/{{ .ProjectName }}:{{ .Version }}-arm64v8
