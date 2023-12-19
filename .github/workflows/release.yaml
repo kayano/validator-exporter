@@ -16,7 +16,7 @@ jobs:
         uses: google-github-actions/release-please-action@v4
         with:
           release-type: go
-          package-name: relayer_exporter
+          package-name: validator-exporter
           changelog-types: >-
             [
               {"type":"feat","section":"Features","hidden":false},
